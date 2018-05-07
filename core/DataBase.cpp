@@ -187,6 +187,7 @@ public:
 			//assert(curr != nullptr);
 			curr->safeNodeChildrenReplace(children);
 	}
+
 	std::string safeSourceUpdate(std::string label, std::string type, std::string timestamp, const std::list<std::pair<std::string, mpark::variant<std::string, double, bool>>>& attributes) {
 		Node * curr = this;
 		curr = curr->safeMove("sources", true);
@@ -507,7 +508,80 @@ std::string SignalK::DataBase::getSelf() {
 bool SignalK::DataBase::update(std::string update){
 	try 
 	{
-		return true;
+        nlohmann::json js = nlohmann::json::parse(update);
+        std::string ctx;
+        nlohmann::json jId = js["context"];
+        bool fres = false;
+        if (jId.is_string())
+        {
+            std::string t = jId;
+            ctx = t;
+        }
+        else ctx = "";
+        if (ctx == "") ctx = "vessels."+getSelf();
+        nlohmann::json jUpdates = js["updates"];
+        if (!jUpdates.is_array()) return false;
+        for (auto &el : jUpdates)
+        {
+            auto jTimestamp = el["timestamp"];
+            std::string timestamp = "";
+            if (jTimestamp.is_string())
+            {
+                std::string tmp = jTimestamp;
+                timestamp = tmp;
+            }
+            if (timestamp == "") continue;
+            auto jSource = el["source"];
+            if (!jSource.is_object()) continue;
+            std::string label = "";
+            std::string type = "";
+            std::list<std::pair<std::string, mpark::variant<std::string, double, bool>>> attributes;
+            for (auto& attribute : jSource.items())
+            {
+                if (attribute.key() == "label" && attribute.value().is_string())
+                {
+                    std::string tmp = attribute.value();
+                    label = tmp;
+
+                }
+                else if (attribute.key() == "type" && attribute.value().is_string())
+                {
+                    std::string tmp = attribute.value();
+                    type = tmp;
+                }
+                else {
+
+                    attributes.push_front(std::make_pair(attribute.key(),
+                                                         Node::jsonToVariant(attribute.value())));
+                }
+            }
+            if (label == "") continue;
+            attributes.sort([](std::pair<std::string, mpark::variant<std::string, double, bool>> a,
+                               std::pair<std::string, mpark::variant<std::string, double, bool>> b) -> bool {
+                return a.first < b.first;
+            });
+            auto jValues = el["values"];
+            if (!jValues.is_array()) continue;
+            std::string sourceReference = root->safeSourceUpdate(label, type, timestamp, attributes);
+            for (auto &val : jValues)
+            {
+                auto curr = Node::recursiveLoad(val, false, false);
+                if (curr == nullptr) continue;
+                auto pathNode = curr->getChild("path");
+                if (pathNode == nullptr) continue;
+                if (pathNode->value.index() != 0) continue;
+                std::string path = mpark::get<0>(pathNode->value);
+                if (path == "") continue;
+                curr->removeChild("path");
+                curr->addChild("timestamp", new Node(timestamp));
+                curr->addChild("$source", new Node(sourceReference));
+                fres = true;
+                root->safeChildrenReplace(ctx +"."+path, curr);
+                delete curr;
+            }
+
+        }
+        return fres;
 	}
 	catch (std::exception ex)
 	{
