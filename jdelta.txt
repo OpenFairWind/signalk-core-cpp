@@ -1,0 +1,20 @@
+{
+  "updates": [
+    {
+      "source": {
+        "sentence": "VHW",
+        "talker": "II",
+        "type": "NMEA0183",
+        "label": "nmeaFromFile"
+      },
+      "timestamp": "2018-05-03T08:50:07.511Z",
+      "values": [
+        {
+          "path": "navigation.speedThroughWater",
+          "value": 3.2101341465673174
+        }
+      ]
+    }
+  ],
+  "context": "vessels.urn:mrn:signalk:uuid:c0d79334-4e25-4245-8892-54e8ccc8021d"
+}

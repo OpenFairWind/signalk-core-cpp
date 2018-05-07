@@ -1,0 +1,168 @@
+{
+  "vessels": {
+    "urn:mrn:signalk:uuid:c0d79334-4e25-4245-8892-54e8ccc8021d": {
+      "uuid": "urn:mrn:signalk:uuid:c0d79334-4e25-4245-8892-54e8ccc8021d",
+      "name": "Volare",
+      "navigation": {
+        "speedThroughWater": {
+          "meta": {
+            "units": "m/s",
+            "description": "Vessel speed through the water"
+          },
+          "value": 3.1329674603517566,
+          "$source": "nmeaFromFile.II",
+          "timestamp": "2018-05-03T08:45:52.471Z",
+          "sentence": "VHW"
+        },
+        "courseOverGroundMagnetic": {
+          "meta": {
+            "units": "rad",
+            "description": "Course over ground (magnetic)"
+          },
+          "value": 3.6742671421374067,
+          "$source": "nmeaFromFile.II",
+          "timestamp": "2018-05-03T08:45:52.471Z",
+          "sentence": "VTG"
+        },
+        "courseOverGroundTrue": {
+          "meta": {
+            "units": "rad",
+            "description": "Course over ground (true)"
+          },
+          "value": 3.6742671421374067,
+          "$source": "nmeaFromFile.II",
+          "timestamp": "2018-05-03T08:45:52.471Z",
+          "sentence": "VTG"
+        },
+        "speedOverGround": {
+          "meta": {
+            "units": "m/s",
+            "description": "Vessel speed over ground. If converting from AIS 'HIGH' value, set to 102.2 (Ais max value) and add warning in notifications"
+          },
+          "value": 2.98377853366834,
+          "$source": "nmeaFromFile.II",
+          "timestamp": "2018-05-03T08:45:52.471Z",
+          "sentence": "VTG"
+        },
+        "position": {
+          "meta": {
+            "description": "The position of the vessel in 2 or 3 dimensions (WGS84 datum)"
+          },
+          "value": {
+            "longitude": 23.536516666666667,
+            "latitude": 60.08291666666667
+          },
+          "$source": "nmeaFromFile.GP",
+          "timestamp": "2018-05-03T09:57:15.000Z",
+          "sentence": "GLL"
+        }
+      },
+      "performance": {
+        "velocityMadeGood": {
+          "meta": {
+            "units": "m/s",
+            "description": "The current velocity made good derived from the speed through water and appearant wind angle. A positive value is heading to upwind, negative to downwind."
+          },
+          "value": 2.71626735478773,
+          "$source": "nmeaFromFile.II",
+          "timestamp": "2018-05-03T08:45:52.471Z",
+          "sentence": "VPW"
+        }
+      },
+      "environment": {
+        "wind": {
+          "speedApparent": {
+            "meta": {
+              "units": "m/s",
+              "description": "Apparent wind speed"
+            },
+            "value": 7.099335131831568,
+            "$source": "nmeaFromFile.II",
+            "timestamp": "2018-05-03T08:45:52.471Z",
+            "sentence": "MWV"
+          },
+          "angleApparent": {
+            "meta": {
+              "units": "rad",
+              "description": "Apparent wind angle, negative to port"
+            },
+            "value": -0.2792526803828544,
+            "$source": "nmeaFromFile.II",
+            "timestamp": "2018-05-03T08:45:52.471Z",
+            "sentence": "MWV"
+          },
+          "speedTrue": {
+            "meta": {
+              "units": "m/s",
+              "description": "Wind speed over water (as calculated from speedApparent and vessel's speed through water)"
+            },
+            "value": 4.388212222791541,
+            "$source": "nmeaFromFile.II",
+            "timestamp": "2018-05-03T08:45:52.071Z",
+            "sentence": "MWV"
+          },
+          "angleTrueWater": {
+            "meta": {
+              "units": "rad",
+              "description": "True wind angle based on speed through water, negative to port"
+            },
+            "value": -0.47123889814606673,
+            "$source": "nmeaFromFile.II",
+            "timestamp": "2018-05-03T08:45:52.071Z",
+            "sentence": "MWV"
+          }
+        },
+        "depth": {
+          "belowTransducer": {
+            "meta": {
+              "units": "m",
+              "description": "Depth below Transducer"
+            },
+            "value": 11.84,
+            "$source": "nmeaFromFile.II",
+            "timestamp": "2018-05-03T08:45:52.272Z",
+            "sentence": "DBT"
+          }
+        },
+        "current": {
+          "meta": {
+            "description": "Direction and strength of current affecting the vessel"
+          },
+          "value": {
+            "setTrue": 0,
+            "setMagnetic": 0,
+            "drift": 0
+          },
+          "$source": "nmeaFromFile.II",
+          "timestamp": "2018-05-03T08:45:52.373Z",
+          "sentence": "VDR"
+        }
+      }
+    }
+  },
+  "self": "vessels.urn:mrn:signalk:uuid:c0d79334-4e25-4245-8892-54e8ccc8021d",
+  "version": "0.1.0",
+  "sources": {
+    "nmeaFromFile": {
+      "label": "nmeaFromFile",
+      "type": "NMEA0183",
+      "II": {
+        "talker": "II",
+        "sentences": {
+          "VHW": "2018-05-03T08:45:52.471Z",
+          "VTG": "2018-05-03T08:45:52.471Z",
+          "VPW": "2018-05-03T08:45:52.471Z",
+          "MWV": "2018-05-03T08:45:52.071Z",
+          "DBT": "2018-05-03T08:45:52.272Z",
+          "VDR": "2018-05-03T08:45:52.373Z"
+        }
+      },
+      "GP": {
+        "talker": "GP",
+        "sentences": {
+          "GLL": "2018-05-03T09:57:15.000Z"
+        }
+      }
+    }
+  }
+}
